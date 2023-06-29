@@ -4,7 +4,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path")
+const path = require("path");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -15,20 +15,21 @@ app.use(
   })
 );
 app.use("/", express.static("uploads")); //use globally
-app.use(bodyParser.urlencoded({extended: true, limit:"50mb"}));
-
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 // config
 if (process.env.NODE_ENV !== "PRODUCTION") {
-    require("dotenv").config({
-        path:"config/.env",
-    })
+  require("dotenv").config({
+    path: "config/.env",
+  });
 }
 
 // import routes
 const user = require("./controller/user");
+const shop = require("./controller/shop");
 
 app.use("/api/v2/user", user);
+app.use("/api/v2/shop", shop);
 
 // it's for ErrorHandling
 app.use(ErrorHandler);
